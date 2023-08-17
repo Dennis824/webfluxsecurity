@@ -12,4 +12,10 @@ spring:
     user: ${spring.r2dbc.username}
     password: ${spring.r2dbc.password}
 
+jwt:
+  password:
+    encoder:
+      secret: 1CykHLQy1k6aGxoBACxjSQzvGai9HhYmmZfAkl-nJL443g
+      iteration: 64
+      keylength: 256
 
