@@ -62,6 +62,8 @@ public class SecurityService {
                 .build();
     }
 
+
+    //todo bad practice. you can find out which usernames are already occupied.
     public Mono<TokenDetails> authenticate(String username, String password) {
         return userRepository.findByUsername(username)
                 .flatMap(user -> {
