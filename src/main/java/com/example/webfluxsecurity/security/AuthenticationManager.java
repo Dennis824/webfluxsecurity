@@ -3,7 +3,6 @@ package com.example.webfluxsecurity.security;
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.exception.UnauthorizedException;
 import com.example.webfluxsecurity.repository.UserRepository;
-import com.example.webfluxsecurity.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.core.Authentication;
