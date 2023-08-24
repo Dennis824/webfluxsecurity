@@ -2,7 +2,7 @@ package com.example.webfluxsecurity.security;
 
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.exception.AuthException;
-import com.example.webfluxsecurity.repository.UserRepository;
+import com.example.webfluxsecurity.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class SecurityService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${jwt.secret}")
@@ -62,13 +62,12 @@ public class SecurityService {
                 .build();
     }
 
-
-    //todo bad practice. you can find out which usernames are already occupied.
     public Mono<TokenDetails> authenticate(String username, String password) {
-        return userRepository.findByUsername(username)
+        return userService.getUserByUsername(username)
                 .flatMap(user -> {
                     if (!user.isEnabled()) {
-                        return Mono.error(new AuthException("Account disabled", "USER_ACCOUNT_DISABLED"));                    }
+                        return Mono.error(new AuthException("Account disabled", "USER_ACCOUNT_DISABLED"));
+                    }
 
                     if (!passwordEncoder.matches(password, user.getPassword())) {
                         return Mono.error(new AuthException("Invalid password", "INVALID_PASSWORD"));
